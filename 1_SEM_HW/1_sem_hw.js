@@ -40,15 +40,9 @@ const musicCollection = {
         const albums = this.albums
         return {
             next() {
-                if (current < albums.length) {
-                    return { done: false, value: albums[current++] }
-                }
-                else {
-                    return { done: true }
-                }
+                return current < albums.length ? { done: false, value: albums[current++] } : { done: true }
             }
-
-        };
+        }
     }
 };
 
@@ -114,12 +108,8 @@ const clientsOrders = [];
 
 function addClientsOrders(clientName, ...dishes) {
     const client = clientsOrders.find(client => client.name === clientName);
-    if (client) {
-        client.orders.push([...dishes]);
-    }
-    else {
-        clientsOrders.push({ name: clientName, orders: [...dishes] });
-    }
+    client ? client.orders.push([...dishes])
+        : clientsOrders.push({ name: clientName, orders: [...dishes] });
 }
 
 
