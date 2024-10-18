@@ -106,6 +106,7 @@ dishes.set('Пицца "Маргарита"', 'Виктор')
 const clientsOrders = [];
 
 
+
 function addClientsOrders(clientName, ...dishes) {
     const client = clientsOrders.find(client => client.name === clientName);
     client ? client.orders.push([...dishes])
@@ -145,3 +146,25 @@ displayClients(clientsOrders); // вывод клиентов
 displayOrders(clientsOrders); // вывод клиентских заказов с поворами
 
 
+
+// переделать на объекты как в задании 
+// не понял как правильно надо
+const client1 = { name: 'Алексей' }
+const client2 = { name: 'Мария' }
+const client3 = { name: 'Ирина' }
+
+const orders = new Map([
+    [client1, ['Пицца "Пепперони"', 'Тирамису']],
+    [client2, ['Суши "Калифорния"', 'Пицца "Маргарита"']],
+    [client3, ['Чизкейк']]
+]);
+
+function displayOrdersByClients() {
+    console.log('');
+    console.log('---- Вариант вывода как в задании с использованием map() для заказов ----');
+    for (const [client, dishes] of orders) {
+        console.log(`Клиент ${client.name} заказал: ${dishes.join(' и ')}`);
+
+    }
+}
+displayOrdersByClients();
