@@ -40,7 +40,7 @@ const musicCollection = {
         const albums = this.albums
         return {
             next() {
-                return current < albums.length ? { done: false, value: albums[current++] } : { done: true }
+                return current < albums.length ? { done: false, value: albums[current++] } : { done: true, value: undefined } // добавлен undefined
             }
         }
     }
