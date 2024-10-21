@@ -156,22 +156,24 @@ document.querySelector('.submit_review').addEventListener('click', () => {
 
 
 function loadInitialData(initial) {
-    const reviewContainer = document.querySelector('.reviews');
-    initial.forEach(product => {
-        let productHTML = `
+    if (initial != null) {
+        const reviewContainer = document.querySelector('.reviews');
+        initial.forEach(product => {
+            let productHTML = `
         <div class="product">
           <h3>${product.product}</h3>`;
 
-        product.reviews.forEach(review => {
-            productHTML += `<div class="review">${review.text}</div>`;
-        });
+            product.reviews.forEach(review => {
+                productHTML += `<div class="review">${review.text}</div>`;
+            });
 
-        productHTML += `</div>`;
-        reviewContainer.insertAdjacentHTML('beforeend', productHTML);
-    });
+            productHTML += `</div>`;
+            reviewContainer.insertAdjacentHTML('beforeend', productHTML);
+        });
+    }
 }
 
-loadInitialData(initialData);
-// loadInitialData(); // устранить ошибку
+//loadInitialData(initialData); // с использованием initialData
+loadInitialData(); // пусто
 
 
