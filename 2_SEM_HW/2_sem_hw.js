@@ -6,13 +6,11 @@ class Library {
 
     constructor(books) {
         try {
-            if (books.length === new Set(books).size) {
-                this.#books = books;
-            } else {
-                throw new Error('Duplicates in initial books');
-            }
+            if (books.length === new Set(books).size) this.#books = books;
+            else throw new Error('Duplicates in initial books');
+
         } catch (error) {
-            console.error(error);
+            console.log(error);
         }
     }
 
@@ -70,7 +68,7 @@ const books = [
 
 const booksForExeption = [
     'Джордж Оруэлл - 1984',
-    'Джордж Оруэлл - 1984',
+    'Джордж Оруэлл - 1984', // дубликат
     'Фёдор Достоевский - Преступление и наказание',
     'Дж. Р. Р. Толкин - Властелин колец',
     'Пелевин - Чапаев и пустота'
@@ -82,7 +80,7 @@ lib.removeBook('Джордж Оруэлл - 1984');
 lib.hasBook('Пелевин - Чапаев и пустота');
 console.log(lib.allBooks);
 
-//const lib1 = new Library(booksForExeption);
+// const lib1 = new Library(booksForExeption); // для вызова ошибки дубликата
 
 
 
@@ -115,8 +113,8 @@ const initialData = [
 // ДОбавить отзыв
 function addReview(product, reviewText) {
 
-    if (reviewText.length < 50 || reviewText.length > 200) {
-        throw new Error('Длина отзыва должна быть от 50 до 200 символов.');
+    if (reviewText.length < 50 || reviewText.length > 500) {
+        throw new Error('Длина отзыва должна быть от 50 до 500 символов.');
     }
 
     const reviewContainer = document.querySelector('.reviews');
@@ -157,9 +155,9 @@ document.querySelector('.submit_review').addEventListener('click', () => {
 
 
 
-function loadInitialData(rewies) {
+function loadInitialData(initial) {
     const reviewContainer = document.querySelector('.reviews');
-    rewies.forEach(product => {
+    initial.forEach(product => {
         let productHTML = `
         <div class="product">
           <h3>${product.product}</h3>`;
@@ -173,7 +171,7 @@ function loadInitialData(rewies) {
     });
 }
 
-initialData();
-//loadInitialData(initialData);
+loadInitialData(initialData);
+// loadInitialData(); // устранить ошибку
 
 
