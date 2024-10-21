@@ -19,15 +19,15 @@ class Library {
         return this.#books;
     }
 
-    addBook(newBook) {
+    addBook(tittle) {
         try {
             this.#books.forEach(book => {
-                if (book === newBook) {
+                if (book === tittle) {
                     throw new Error('the book already exists');
                 }
 
             });
-            this.#books.push(newBook);
+            this.#books.push(tittle);
 
         } catch (error) {
             console.log(error);
@@ -35,10 +35,10 @@ class Library {
 
     }
 
-    removeBook(book) {
+    removeBook(tittle) {
         try {
-            if (this.#books.includes(book)) {
-                this.#books.splice(this.#books.indexOf(book), 1);
+            if (this.#books.includes(tittle)) {
+                this.#books.splice(this.#books.indexOf(tittle), 1);
             }
             else {
                 throw new Error('Book not found');
@@ -51,8 +51,8 @@ class Library {
 
     }
 
-    hasBook(book) {
-        console.log(this.#books.includes(book) ? 'Book found in library' : 'Book not found in library');
+    hasBook(tittle) {
+        console.log(this.#books.includes(tittle) ? 'Book found in library' : 'Book not found in library');
     }
 
 }
@@ -78,6 +78,7 @@ const lib = new Library(books);
 lib.addBook('Джордж Мартин - Песнь льда и пламени');
 lib.removeBook('Джордж Оруэлл - 1984');
 lib.hasBook('Пелевин - Чапаев и пустота');
+
 console.log(lib.allBooks);
 
 // const lib1 = new Library(booksForExeption); // для вызова ошибки дубликата
