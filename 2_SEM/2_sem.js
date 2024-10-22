@@ -90,7 +90,7 @@ class User {
 
 
 class PremiumUser extends User {
-    premiumAccount = null
+    premiumAccount;
 
     SetPremiumAccount(years) {
         this.premiumAccount = new Date().setFullYear(new Date().getFullYear() + years);
@@ -103,15 +103,18 @@ class RegularUser extends User {
 }
 
 function getAccountInfo(user) {
-    console.log(user instanceof PremiumUser ? `${user.firstName} - Premium user` : `${user.firstName} - Regular user`);
+    console.log(user instanceof PremiumUser ? `${user.firstName + ' ' + user.lastName} - Premium user`
+        : `${user.firstName + ' ' + user.lastName} - Regular user`);
+
     const exDate = new Date(user?.premiumAccount).getFullYear() ?? 'prem not found';
-    console.log(isNaN(exDate) ? 'Prem is not found' : `Expired - ${exDate}`);
+
+    console.log(!isNaN(exDate) ? `Expired - ${exDate}` : 'premium not found');
 }
 
 
 const regUser = new RegularUser('Ivan', 'Ivanov');
-const premUser = new PremiumUser('Super Ivan', 'SuperIvanov');
-premUser.SetPremiumAccount(2);
+const premUser = new PremiumUser('Ivan', 'Super');
+premUser.SetPremiumAccount(1);
 
 
 getAccountInfo(regUser);
@@ -138,7 +141,7 @@ const inputEl = document.querySelector('.check');
 
 function checkNumber(string) {
     try {
-        if (!isNaN(Number(string)) && string !== '') {
+        if (Number(string) && string !== '') {
             checkedEl.insertAdjacentHTML('beforeend', `<p> Это число</p>`)
         }
         else if (string === '') throw new Error("Пусто")
@@ -160,12 +163,6 @@ document.querySelector('.btn').addEventListener('click', () => {
 });
 
 
-// sem 1:34
-
-
-
-
-
 /*
 Пользователи вашего сайта могут добавлять элементы в список. Но есть условие:
 введенное значение должно содержать от 3 до 10 символов.
@@ -175,6 +172,36 @@ document.querySelector('.btn').addEventListener('click', () => {
 требованиям.
 */
 
+const textArea = document.querySelector('.input');
+const sendButton = document.querySelector('.send__comment');
+const ulEls = document.querySelector('.list');
+
+
+function addToList(text) {
+
+    try {
+        if (text.length < 3 || text.length > 10) {
+            throw new Error('Текст должен содержать от 3 до 10 символов');
+        }
+        else {
+            ulEls.insertAdjacentHTML('beforeend', `<li> ${text}</li>`)
+        }
+
+    } catch (error) {
+        if (!ulEls.querySelector('.error')) {
+            ulEls.insertAdjacentHTML('afterbegin', `<p class='error'> ${error.message}</p>`)
+        }
+        else {
+            setTimeout(() => {
+                ulEls.removeChild(ulEls.children[0])
+            }, 3000);
+        }
+    }
+}
+
+sendButton.addEventListener('click', () => {
+    addToList(textArea.value);
+});
 
 
 
