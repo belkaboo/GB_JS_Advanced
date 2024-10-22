@@ -190,11 +190,9 @@ function addToList(text) {
     } catch (error) {
         if (!ulEls.querySelector('.error')) {
             ulEls.insertAdjacentHTML('afterbegin', `<p class='error'> ${error.message}</p>`)
-        }
-        else {
             setTimeout(() => {
-                ulEls.removeChild(ulEls.children[0])
-            }, 3000);
+                ulEls.removeChild(ulEls.children[0]);
+            }, 2000);
         }
     }
 }
