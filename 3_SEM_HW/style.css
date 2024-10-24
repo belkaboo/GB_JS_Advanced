@@ -5,6 +5,7 @@ body {
     align-items: center;
     flex-direction: column;
     min-height: 100vh;
+    min-width: 480px;
     margin: 0;
     background-color: #f4f4f4;
 }
@@ -38,6 +39,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: all 0.5s;
 }
 
 button:hover {
@@ -55,16 +57,13 @@ a {
     color: red;
 }
 
-
-.reviews {
-    margin-top: 20px;
-}
-
 .product {
     margin-bottom: 15px;
 }
 
 .review {
+    display: flex;
+    justify-content: space-between;
     padding: 10px;
     background: #e9ecef;
     border-radius: 5px;
@@ -79,6 +78,8 @@ h3 {
 }
 
 .delete-btn {
+    align-self: flex-end;
+    white-space: nowrap;
     background-color: rgb(236, 75, 75);
     color: white;
     border: none;
@@ -86,6 +87,7 @@ h3 {
     padding: 5px 10px;
     cursor: pointer;
     margin-left: 10px;
+
 }
 
 .delete-btn:hover {

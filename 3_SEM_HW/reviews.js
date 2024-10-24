@@ -1,4 +1,5 @@
 import { saveReviewsToLocalStorage, getReviewsFromLocalStorage } from './storage.js';
+
 const reviewsContainer = document.querySelector('.reviews_container');
 
 
@@ -6,7 +7,8 @@ function loadReviews(option) {
     const reviews = getReviewsFromLocalStorage();
     reviewsContainer.innerHTML = '';
 
-    Object.keys(reviews).forEach(productName => {
+    Object.keys(reviews).forEach(productName => { //переписать на insertAdjacentHTML
+
         const productDiv = document.createElement('div');
         productDiv.classList.add('product');
 
@@ -35,7 +37,7 @@ function loadReviews(option) {
         reviewsContainer.appendChild(productDiv);
     });
 
-    document.querySelectorAll('.product').forEach(currentItem => {
+    document.querySelectorAll('h3').forEach(currentItem => {
         currentItem.addEventListener('click', (e) => {
             const childes = e.target.parentNode.childNodes
             for (let i = 1; i < childes.length; i++) {
