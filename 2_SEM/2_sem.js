@@ -185,6 +185,7 @@ function addToList(text) {
         }
         else {
             ulEls.insertAdjacentHTML('beforeend', `<li> ${text}</li>`)
+            textArea.value = '';
         }
 
     } catch (error) {
