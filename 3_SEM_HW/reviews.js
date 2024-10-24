@@ -1,19 +1,8 @@
 import { saveReviewsToLocalStorage, getReviewsFromLocalStorage } from './storage.js';
 const reviewsContainer = document.querySelector('.reviews_container');
 
-function deleteReview(productName, reviewIndex) {
-    const reviews = getReviewsFromLocalStorage();
-    reviews[productName].splice(reviewIndex, 1);
 
-    if (reviews[productName].length === 0) {
-        delete reviews[productName];
-    }
-
-    saveReviewsToLocalStorage(reviews);
-    loadReviews();
-}
-
-function loadReviews() {
+function loadReviews(option) {
     const reviews = getReviewsFromLocalStorage();
     reviewsContainer.innerHTML = '';
 
@@ -28,11 +17,11 @@ function loadReviews() {
 
         reviews[productName].forEach((review, index) => {
             const reviewDiv = document.createElement('div');
-            reviewDiv.classList.add('review', 'hide');
+            reviewDiv.classList.add('review', option); // костыль для корректной перерисовки
             reviewDiv.textContent = review;
 
             const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Удалить';
+            deleteButton.textContent = 'Удалить отзыв';
             deleteButton.classList.add('delete-btn');
 
             deleteButton.addEventListener('click', () => {
@@ -46,19 +35,29 @@ function loadReviews() {
         reviewsContainer.appendChild(productDiv);
     });
 
-
     document.querySelectorAll('.product').forEach(currentItem => {
         currentItem.addEventListener('click', (e) => {
-            if (e.target.nextSibling.classList.contains('hide')) {
-                e.target.nextSibling.classList.remove('hide')
+            const childes = e.target.parentNode.childNodes
+            for (let i = 1; i < childes.length; i++) {
+                if (childes[i].classList.contains('hide')) childes[i].classList.remove('hide')
+                else childes[i].classList.add('hide')
             }
-            else e.target.nextSibling.classList.add('hide')
         });
     });
 }
 
-loadReviews();
+function deleteReview(productName, reviewIndex) {
+    const reviews = getReviewsFromLocalStorage();
+    reviews[productName].splice(reviewIndex, 1);
+
+    if (reviews[productName].length === 0) {
+        delete reviews[productName];
+    }
+
+    saveReviewsToLocalStorage(reviews);
+    loadReviews();
+}
 
 
 
-
+loadReviews('hide');
