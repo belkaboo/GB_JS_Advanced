@@ -142,3 +142,81 @@ btnClear.addEventListener('click', function (e) {
 });
 
 
+
+/*
+Создать интерактивную веб-страницу, где пользователи могут выбирать различные элементы мебели
+(например, столы, стулья, диваны) и их параметры (материал, цвет, стиль). Выбранные параметры должны
+быть сохранены так, чтобы при повторном посещении сайта пользователь мог видеть свой ранее собранный
+комплект мебели.
+1. Пользователи могут выбирать из различных типов мебели (например, столы, стулья, диваны).
+2. Для каждого типа мебели доступен выбор параметров (цвет, материал, стиль).
+3. Предусмотреть кнопку "Сохранить комплект", при нажатии на которую текущий выбор пользователя
+сохраняется в localStorage.
+4. При повторном посещении сайта автоматически загружать сохраненные параметры из localStorage и
+отображать ранее созданный комплект.
+5. Предусмотреть возможность для пользователя очистить сохраненные настройки через специальную
+кнопку.
+6. После нажатия на кнопку "Сохранить" на странице должен отображаться выбранный комплект.
+7. При нажатии на кнопку "Очистить" должно появляться сообщение о том, что выбор не сделан и
+предыдущие настройки удалены.
+*/
+// localStorage.removeItem('furnitureSet');
+
+
+const selectTable = document.getElementById('table');
+const selectChair = document.getElementById('chair');
+const selectSofa = document.getElementById('sofa');
+const resultDiv = document.getElementById('result');
+
+const btnSaveResult = document.getElementById('save');
+const btnClearResult = document.getElementById('clear');
+
+const LOC_STOR_KEY = 'furnitureSet';
+
+
+function DisplayResults() {
+    resultDiv.innerHTML = '';
+    if (localStorage.getItem(LOC_STOR_KEY)) {
+
+        let furnitureSet = JSON.parse(localStorage.getItem(LOC_STOR_KEY));
+
+        resultDiv.insertAdjacentHTML('beforeend', ` 
+        <h3>Вы выбрали</h3>
+        <p>Стол, материал - ${furnitureSet[0]}</p>
+        <p>Стул, материал - ${furnitureSet[1]}</p>
+        <p>Диван, в стиле - ${furnitureSet[2]}</p>`) // костыль, не масштабируется.
+    }
+    else {
+        resultDiv.insertAdjacentHTML('beforeend', `<p>Комплект не выбран</p>`)
+    }
+
+}
+
+
+btnSaveResult.addEventListener('click', () => {
+    resultDiv.innerHTML = '';
+    let furnitureSet = [];
+    try {
+        furnitureSet.push(selectTable.value, selectChair.value, selectSofa.value);
+        localStorage.setItem(LOC_STOR_KEY, JSON.stringify(furnitureSet));
+        DisplayResults();
+
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+btnClearResult.addEventListener('click', () => {
+    localStorage.removeItem(LOC_STOR_KEY);
+    DisplayResults();
+
+});
+
+
+
+window.addEventListener('load', () => {
+    DisplayResults();
+
+});
+
+
