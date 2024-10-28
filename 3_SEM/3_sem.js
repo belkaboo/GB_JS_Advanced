@@ -14,9 +14,63 @@
 её снова после завершения операции (будь то успешная загрузка или ошибка).
 */
 
+const btn = document.querySelector('.load');
+const news = document.querySelector('.news');
+
+const dataBase = [
+    {
+        tittle: 'Название статьи 1',
+        content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+    },
+    {
+        tittle: 'Название статьи 2',
+        content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto.'
+    },
+    {
+        tittle: 'Название статьи 3',
+        content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto, eos.'
+    },
+]
 
 
+function fetchNews(data) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (Math.random() > 0.1) {
+                resolve(data);
+            }
+            else {
+                reject('Ошибка загрузки')
+            }
+        }, 3000);
+    });
+};
 
+
+btn.addEventListener('click', () => {
+
+    news.innerHTML = ''
+    btn.disabled = true;
+
+    fetchNews(dataBase)
+        .then(data => {
+            data.forEach((elem) => {
+                const tittle = document.createElement('h3');
+                const content = document.createElement('p');
+                tittle.textContent = elem.tittle;
+                content.textContent = elem.content;
+                news.appendChild(tittle);
+                news.appendChild(content);
+
+            });
+        }).catch((err) => {
+            const error = document.createElement('p');
+            error.textContent = err;
+            news.appendChild(error);
+        }).finally(() => {
+            btn.disabled = false;
+        });
+});
 
 
 
