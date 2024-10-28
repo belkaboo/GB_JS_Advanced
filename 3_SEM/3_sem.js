@@ -89,3 +89,56 @@ btn.addEventListener('click', () => {
 сообщение отображается на странице.
 */
 
+const textArea = document.querySelector('.text-input');
+const btnSave = document.querySelector('.btn-save');
+const btnLoad = document.querySelector('.btn-load');
+const btnClear = document.querySelector('.btn-clear');
+const notesDiv = document.querySelector('.notes-items');
+
+btnSave.addEventListener('click', () => {
+    notesDiv.innerHTML = '';
+    let notes = JSON.parse(localStorage.getItem('notes')) || [];
+    try {
+        if (textArea.value !== '') {
+            const text = textArea.value.trim();
+            notes.push(text);
+            localStorage.setItem('notes', JSON.stringify(notes));
+            textArea.value = '';
+        }
+        else {
+            throw new Error("Пусто");
+
+        }
+    } catch (error) {
+        notesDiv.textContent = error;
+        setTimeout(() => {
+            notesDiv.textContent = '';
+        }, 2000);
+
+    }
+});
+
+
+btnLoad.addEventListener('click', () => {
+    notesDiv.innerHTML = '';
+    if (localStorage.getItem('notes')) {
+        const notes = JSON.parse(localStorage.getItem('notes'));
+        for (const element of notes) {
+            const newNote = document.createElement('p');
+            newNote.textContent = element;
+            notesDiv.appendChild(newNote)
+        }
+    }
+    else {
+        notesDiv.textContent = 'Empty'
+    }
+});
+
+
+
+btnClear.addEventListener('click', function (e) {
+    notesDiv.innerHTML = '';
+    localStorage.removeItem('notes')
+});
+
+
